@@ -36,7 +36,6 @@ end;
 """
 
 lines = code.strip().split('\n')
-print(lines)
 
 def translate_line(line):
     tokens = line.replace("(", " ( ").replace(")", " ) ").replace(";", " ; ").replace(",", " , ").split()
@@ -61,7 +60,7 @@ def translate_line(line):
 translated_code = [translate_line(line) for line in lines]
 
 print("Таблица шифровки:")
-for key, value in sorted(token_table.items()):
+for key, value in sorted(token_table.items(), key=lambda  item: item[1]):
     print(f"{key}\t{value}")
 
 print("\nТаблица переменных:")
