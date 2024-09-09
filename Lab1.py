@@ -35,11 +35,9 @@ PUT DATA (Z);
 end;
 """
 
-# Разделяем текст на строки
 lines = code.strip().split('\n')
 print(lines)
 
-# Функция для обработки строки и замены лексем на их числовые коды
 def translate_line(line):
     tokens = line.replace("(", " ( ").replace(")", " ) ").replace(";", " ; ").replace(",", " , ").split()
     translated_tokens = []
@@ -48,11 +46,9 @@ def translate_line(line):
         if token in token_table:
             translated_tokens.append(str(token_table[token]))
         elif token.isdigit():
-            # Если это число, то это константа
             translated_tokens.append(str(token_table["const"]))
             translated_tokens.append(token)
         else:
-            # Обрабатываем идентификаторы
             if token not in variable_table:
                 global variable_counter
                 variable_table[token] = variable_counter
@@ -62,20 +58,16 @@ def translate_line(line):
 
     return " ".join(translated_tokens)
 
-# Обрабатываем каждую строку
 translated_code = [translate_line(line) for line in lines]
 
-# Выводим таблицу шифровки
 print("Таблица шифровки:")
 for key, value in sorted(token_table.items()):
     print(f"{key}\t{value}")
 
-# Выводим таблицу переменных
 print("\nТаблица переменных:")
 for key, value in sorted(variable_table.items(), key=lambda item: item[1]):
     print(f"{value}\t{key}")
 
-# Выводим переведенный код
 print("\nПереведенный код:")
 for line in translated_code:
     print(line)
